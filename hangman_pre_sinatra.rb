@@ -1,13 +1,16 @@
-raw_file = File.open("5desk.txt", "r")
-raw_words = raw_file.readlines
-words = []
-raw_words.each do |x|
-  x.strip!
-  if x.match(/[A-Z]+$/) || x.length < 5 || x.length > 12
-    next
-  else
-    words << x.downcase
+def clean_word_bank(text_file)
+  raw_file = File.open(text_file, "r")
+  raw_words = raw_file.readlines
+  words = []
+  raw_words.each do |x|
+    x.strip!
+    if x.match(/[A-Z]+$/) || x.length < 5 || x.length > 12
+      next
+    else
+      words << x.downcase
+    end
   end
+  return words
 end
 
 class Game
@@ -80,7 +83,7 @@ class Game
   end
 end
 
+words = clean_word_bank("5desk.txt")
 game_word = words[rand(words.length-1).floor]
 game = Game.new(game_word)
 game.play_game()
-
